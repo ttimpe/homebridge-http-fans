@@ -42,10 +42,13 @@ export default class HTTPFanService {
 		let isAlive: boolean = await this.pingtest('192.168.2.18')
 		if (isAlive) {
 			try {
-				let res = await axios.get(this.API_URL + '/' + fan.id + '/speed/' + value)
+				let url = this.API_URL + '/' + fan.id + '/speed/' + value
+				console.debug('Setting rotation speed with URL', url)
+				let res = await axios.get(url)
 				if (res.status == 200) {
 				}
 			} catch (error) {
+				console.debug('Got error while setClockwiseRotation', error)
 
 			}
 		}
@@ -60,13 +63,14 @@ export default class HTTPFanService {
 				} else {
 					url = url + 'counter-clockwise';
 				}
+				console.debug('setClockwiseRotation with url', url)
 
 				let res = await axios.get(url)
 				if (res.status == 200) {
 
 				}
 			} catch (error) {
-
+				console.debug('Got error while setClockwiseRotation', error)
 			}
 		}
 	}
