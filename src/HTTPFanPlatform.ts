@@ -23,8 +23,9 @@ export default class HTTPFanPlatform implements DynamicPlatformPlugin {
 
 	didFinishLaunching() {
 		this.service = new HTTPFanService()
-		this.updateValues()
+		this.createAccessories()		
 		this.timer = setInterval(() => this.updateValues(), 10000)
+
 	}
 
 	async updateValues() {
