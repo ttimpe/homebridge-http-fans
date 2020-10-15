@@ -20,6 +20,7 @@ export default class HTTPFanService {
 	async getDevices() {
 		let output: HTTPFan[] = []
 		let isAlive: boolean = await this.pingtest('192.168.2.18')
+		console.log('arduino is alive: ', isAlive)
 		if (isAlive) {
 			try {
 				let res = await axios.get(this.API_URL)
@@ -31,6 +32,7 @@ export default class HTTPFanService {
 					return output
 				}
 			} catch (error) {
+				console.log('Got error while trying to fetch fans', error)
 				return output
 			} 
 		}

@@ -42,7 +42,7 @@ export default class HTTPFanPlatform implements DynamicPlatformPlugin {
 		this.fans = await this.service.getDevices()
 
 		for (var i=0; i<this.fans.length; i++) {
-
+				
 				const uuid = this.api.hap.uuid.generate('homebridge-http-fans-' + this.fans[i].pin)
 				let accessory = this.accessories.find(accessory => accessory.UUID === uuid)
 
