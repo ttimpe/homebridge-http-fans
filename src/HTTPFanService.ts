@@ -43,7 +43,7 @@ export default class HTTPFanService {
 		if (isAlive) {
 			try {
 				let url = this.API_URL + '/' + fan.id + '/speed/' + value
-				console.debug('Setting rotation speed with URL', url)
+				console.log('Setting rotation speed with URL', url)
 				let res = await axios.get(url)
 				if (res.status == 200) {
 				}
@@ -63,7 +63,7 @@ export default class HTTPFanService {
 				} else {
 					url = url + 'counter-clockwise';
 				}
-				console.debug('setClockwiseRotation with url', url)
+				console.log('setClockwiseRotation with url', url)
 
 				let res = await axios.get(url)
 				if (res.status == 200) {
