@@ -40,6 +40,8 @@ export default class HTTPFanService {
 
 	async setRotationSpeed(fan: HTTPFan, value: number) {
 		let isAlive: boolean = await this.pingtest('192.168.2.18')
+		console.log('[HTTPFans] setRotationSpeed: arduino is alive: ', isAlive)
+
 		if (isAlive) {
 			try {
 				let url = this.API_URL + '/' + fan.id + '/speed/' + value
@@ -55,6 +57,8 @@ export default class HTTPFanService {
 	}
 	async setClockwiseRotation(fan: HTTPFan, value: boolean) {
 		let isAlive: boolean = await this.pingtest('192.168.2.18')
+		console.log('[HTTPFans] setClockwiseRotation: arduino is alive: ', isAlive)
+
 		if (isAlive) {
 			try {
 				let url = this.API_URL + '/' + fan.id + '/direction/';
