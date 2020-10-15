@@ -63,6 +63,7 @@ export default class HTTPFanAccessory {
 
     setPowerState(state: CharacteristicValue, callback: CharacteristicSetCallback) {
         callback(null, state)
+        this.log.debug('called setPowerState')
         if (state == this.Characteristic.Active.ACTIVE) {
             this.service.setRotationSpeed(this.fan, 30)
         } else if (state == this.Characteristic.Active.INACTIVE) {
@@ -76,6 +77,7 @@ export default class HTTPFanAccessory {
 
     setRotationSpeed(value: CharacteristicValue, callback: CharacteristicSetCallback) {
         callback(null, value)
+        this.log.debug('Called setRotationSpeed')
         this.service.setRotationSpeed(this.fan, parseInt(value.toString()))
     }
 
