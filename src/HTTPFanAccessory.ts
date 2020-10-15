@@ -40,12 +40,12 @@ export default class HTTPFanAccessory {
         .on('get', this.getPowerState.bind(this))
         .on('set', this.setPowerState.bind(this));
         this.fanService
-        .addCharacteristic(this.Characteristic.RotationSpeed)
+        .getCharacteristic(this.Characteristic.RotationSpeed)
         .on('get', this.getRotationSpeed.bind(this))
         .on('set', this.setRotationSpeed.bind(this));
 
         this.fanService
-        .addCharacteristic(this.Characteristic.RotationDirection) // used to switch beetwen natural and normal mode
+        .getCharacteristic(this.Characteristic.RotationDirection) // used to switch beetwen natural and normal mode
         .on('get', this.getRotationDirection.bind(this))
         .on('set', this.setRotationDirection.bind(this));
         this.log.debug('got fan service');
