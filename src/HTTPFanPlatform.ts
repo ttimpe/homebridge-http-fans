@@ -30,7 +30,7 @@ export default class HTTPFanPlatform implements DynamicPlatformPlugin {
 	async updateValues() {
 		await this.service.fetchUpdates()
 		for (var i=0; i<this.fanAccessories.length; i++) {
-			this.fanAccessories[i].fanService.updateCharacteristic(this.Characteristic.Active, (this.fanAccessories[i].fan.speed != 0))
+			this.fanAccessories[i].fanService.updateCharacteristic(this.Characteristic.Active, this.fanAccessories[i].fan.power)
 			this.fanAccessories[i].fanService.updateCharacteristic(this.Characteristic.RotationSpeed, this.fanAccessories[i].fan.speed)
 			this.fanAccessories[i].fanService.updateCharacteristic(this.Characteristic.RotationDirection, this.fanAccessories[i].fan.clockwiseRotation)
 
