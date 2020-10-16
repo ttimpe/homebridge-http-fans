@@ -78,4 +78,27 @@ export default class HTTPFanService {
 			}
 		}
 	}
+
+	async setPowerState(fan: HTTPFan, value: boolean) {
+let isAlive: boolean = await this.pingtest('192.168.2.18')
+		console.log('[HTTPFans] setClockwiseRotation: arduino is alive: ', isAlive)
+
+		if (isAlive) {
+			try {
+				let url = this.API_URL + '/' + fan.id + '/power/';
+				if (value) {
+					url = url + 'on';
+				} else {
+					url = url + 'off';
+				}
+				console.log('setPowerState with url', url)
+
+				let res = await axios.get(url)
+				if (res.status == 200) {
+
+				}
+			} catch (error) {
+				console.debug('Got error while setPowerState', error)
+			}
+		}	}
 }
