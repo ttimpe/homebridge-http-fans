@@ -54,7 +54,11 @@ export default class HTTPFanAccessory {
 
 
     getPowerState(callback: CharacteristicGetCallback) {
-        callback(null, this.fan.power)
+        if (this.fan.power) {
+            callback(null, this.Characteristic.Active.ACTIVE);
+        } else {
+            callback(null, this.Characteristic.Active.INACTIVE);
+        }
     }
 
     setPowerState(state: CharacteristicValue, callback: CharacteristicSetCallback) {

@@ -80,8 +80,8 @@ export default class HTTPFanService {
 	}
 
 	async setPowerState(fan: HTTPFan, value: boolean) {
-let isAlive: boolean = await this.pingtest('192.168.2.18')
-		console.log('[HTTPFans] setClockwiseRotation: arduino is alive: ', isAlive)
+		let isAlive: boolean = await this.pingtest('192.168.2.18')
+		console.log('[HTTPFans] setPowerState: arduino is alive: ', isAlive)
 
 		if (isAlive) {
 			try {
@@ -100,5 +100,6 @@ let isAlive: boolean = await this.pingtest('192.168.2.18')
 			} catch (error) {
 				console.debug('Got error while setPowerState', error)
 			}
-		}	}
+		}
+	}
 }
