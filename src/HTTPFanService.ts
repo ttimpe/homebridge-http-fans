@@ -5,6 +5,7 @@ import HTTPFan from './HTTPFan'
 
 export default class HTTPFanService {
 	private API_URL: string = 'http://192.168.2.18/fans'
+	public fans: HTTPFan[] = []
 	constructor() {
 
 	}
@@ -29,11 +30,31 @@ export default class HTTPFanService {
 					for (var i=0; i<output.length; i++) {
 						output[i].id = i;
 					}
-					return output
+					this.fans = output;
 				}
 			} catch (error) {
 				console.log('Got error while trying to fetch fans', error)
-				return output
+			} 
+		}
+	}
+
+
+	async fetchUpdates() {
+		let isAlive: boolean = await this.pingtest('192.168.2.18')
+		console.log('arduino is alive: ', isAlive)
+		if (isAlive) {
+			try {
+				let res = await axios.get(this.API_URL)
+				if (res.status == 200) {
+					var updated = res.data as HTTPFan[]
+					for (var i=0; i<this.fans.length; i++) {
+						this.fans[i].power = updated[i].power
+						this.fans[i].speed = updated[i].speed
+						this.fans[i].clockwiseRotation = updated[i].clockwiseRotation
+					}
+				}
+			} catch (error) {
+				console.log('Got error while trying to fetch fans', error)
 			} 
 		}
 	}

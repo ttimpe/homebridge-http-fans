@@ -9,7 +9,6 @@ export default class HTTPFanPlatform implements DynamicPlatformPlugin {
 	public readonly Characteristic: typeof Characteristic = this.api.hap.Characteristic;
 
 	public accessories: PlatformAccessory[] = []
-	public fans: HTTPFan[] = []
 	public fanAccessories: HTTPFanAccessory[] = []
 
 	public service: HTTPFanService
@@ -29,7 +28,7 @@ export default class HTTPFanPlatform implements DynamicPlatformPlugin {
 	}
 
 	async updateValues() {
-		this.fans = await this.service.getDevices()
+		await this.service.fetchUpdates()
 		for (var i=0; i<this.fanAccessories.length; i++) {
 			this.fanAccessories[i].fanService.updateCharacteristic(this.Characteristic.Active, (this.fanAccessories[i].fan.speed != 0))
 			this.fanAccessories[i].fanService.updateCharacteristic(this.Characteristic.RotationSpeed, this.fanAccessories[i].fan.speed)
@@ -39,23 +38,23 @@ export default class HTTPFanPlatform implements DynamicPlatformPlugin {
 	}
 
 	async createAccessories() {
-		this.fans = await this.service.getDevices()
+		await this.service.getDevices()
 
-		for (var i=0; i<this.fans.length; i++) {
+		for (var i=0; i<this.service.fans.length; i++) {
 				
-				const uuid = this.api.hap.uuid.generate('homebridge-http-fans-' + this.fans[i].pin)
+				const uuid = this.api.hap.uuid.generate('homebridge-http-fans-' + this.service.fans[i].pin)
 				let accessory = this.accessories.find(accessory => accessory.UUID === uuid)
 
 				if (accessory) {
 					this.log.info('Restoring cached accessory', accessory.displayName)
 					this.api.updatePlatformAccessories([accessory])
 				} else {
-					this.log.info('Adding new device:', this.fans[i].name)
-					accessory = new this.api.platformAccessory(this.fans[i].name, uuid)
+					this.log.info('Adding new device:', this.service.fans[i].name)
+					accessory = new this.api.platformAccessory(this.service.fans[i].name, uuid)
 					
 					this.api.registerPlatformAccessories('homebridge-http-fans', 'HTTPFans', [accessory])
 				}
-				let fanAccessory = new HTTPFanAccessory(this, accessory, this.log, this.fans[i], this.service)
+				let fanAccessory = new HTTPFanAccessory(this, accessory, this.log, this.service.fans[i], this.service)
 				this.fanAccessories.push(fanAccessory)
  
 			}
